@@ -1,19 +1,38 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import HomePage from './landing_page/Home/HomePage';
-import Aboutme from './landing_page/About/Aboutme';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Homepage from './landing_page/home/Homepage';
+import PortfolioPage from './landing_page/portfolio/PortfolioPage';
+import AboutPage from './landing_page/about/AboutPage';
+import ContactPage from './landing_page/contact/ContactPage';
+import Navbar from './landing_page/Navbar';
+
+const App = () => {
+  const location = useLocation();
+
+  return (
+    <>
+      {/* Conditionally render Navbar on all pages except the Homepage */}
+      {location.pathname !== '/' && <Navbar />}
+      
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/portfolio" element={<PortfolioPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+      </Routes>
+    </>
+  );
+};
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    {/* < HomePage /> */}
-    <Aboutme />
-  </React.StrictMode>
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
